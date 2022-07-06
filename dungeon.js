@@ -2,17 +2,17 @@ async function handler(m, { conn, usedPrefix, command, text }) {
     let user = global.db.data.users[m.sender]
     let SWORD = user.sword < 1
     let ARMOR = user.armor < 1
-    let HEALT = user.healt < 90
+    let HEALTH = user.health < 90
     let prefix = usedPrefix
-    if (SWORD || ARMOR || HEALT) {
+    if (SWORD || ARMOR || HEALTH) {
         const buttons = []
 
-        console.log({SWORD, ARMOR, HEALT})
-        if (SWORD) buttons.push({buttonId: `${prefix}craft sword`, buttonText: {displayText: 'Craft Sword'}, type: 1})
+        console.log({SWORD, ARMOR, HEALTH})
+        if (SWORD) buttons.push({buttonId: `${prefix}meracik sword`, buttonText: {displayText: 'Meracik Sword'}, type: 1})
         if (ARMOR) buttons.push({buttonId: `${prefix}shop buy armor`, buttonText: {displayText: 'Beli Armor'}, type: 1})
-        if (HEALT) buttons.push({buttonId: `${prefix}heal`, buttonText: {displayText: 'Healing'}, type: 1})
+        if (HEALTH) buttons.push({buttonId: `${prefix}heal`, buttonText: {displayText: 'Healing'}, type: 1})
         
-        let lmao = item(user.sword * 1, user.armor * 1, user.healt * 1, usedPrefix)
+        let lmao = item(user.sword * 1, user.armor * 1, user.health * 1, usedPrefix)
         if (buttons.length == 0) return m.reply(lmao)   
         const buttonMessage = {
             text: lmao,
@@ -67,15 +67,15 @@ async function handler(m, { conn, usedPrefix, command, text }) {
         if (room.game.player1 && room.game.player2 && room.game.player3 && room.game.player4) {
 
         // Hadiah ben do seneng :v
-        room.price.money += (Math.floor(Math.random() * 201)) * 1
-        room.price.exp += (Math.floor(Math.random() * 401)) * 1
+        room.price.money += (Math.floor(Math.random() * 1000001)) * 1
+        room.price.exp += (Math.floor(Math.random() * 500001)) * 1
         room.price.iron += (pickRandom([0, 0, 0, 0, 1, 0, 0, 0])) * 1
-        room.game.diamond += (pickRandom([0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])) * 1
+        room.game.diamond += (pickRandom([0, 2, 0, 1, 0, 1, 0, 0, 3, 0, 0, 1, 2, 0, 0])) * 1
         room.game.sampah += (Math.floor(Math.random() * 101)) * 1
         room.price.string += (Math.floor(Math.random() * 2)) * 1
-        room.price.kayu += (Math.floor(Math.random() * 2)) * 1
-        room.price.batu += (Math.floor(Math.random() * 2)) * 1
-        room.game.makananPet += (pickRandom([0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0])) * 1
+        room.price.kayu += (Math.floor(Math.random() * 100)) * 1
+        room.price.batu += (Math.floor(Math.random() * 10)) * 1
+        room.game.makananPet += (pickRandom([0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 0, 0])) * 1
         room.game.common += (pickRandom([0, 0, 0, 1, 0, 0, 0, 0, 0, 0])) * 1
         room.game.uncommon += (pickRandom([0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0])) * 1
 
@@ -111,21 +111,23 @@ Sedang berperang di dungeon...
         setTimeout(async () => {
           let users = global.db.data.users[m.sender]
           let player  = [p1, p2, p3, p4]
-          let { healt, sword } = room.less
-          let { exp, money, sampah, potion, diamond, iron, kayu, batu, string, common, uncommon, mythic, legendary, pet, makananPet } = room.price  
+          let { health, sword } = room.less
+          let { exp, money, tiketcoin, sampah, potion, diamond, iron, kayu, batu, string, common, uncommon, mythic, legendary, pet, makananPet } = room.price  
           let str2 = `
-❤️Nyawa *${M(p1)}*, *${M(p2)}*, *${M(p3)}* dan *${M(p4)}* masing masing berkurang *-${healt * 1}*, dan durability ⚔️Sword kalian masing masing berkurang *-${sword * 1}* karena kalian telah membunuh *${pickRandom(['Ender Dragon', 'Baby Dragon', 'Titan', 'Cacing dan Semut', 'PP Mikey', 'Orang', 'Kecoa', 'Semut', 'Siput', '....🗿', 'Wither', 'Sekeleton', 'Ayam Emas', 'Temenmu', 'Sapi', 'Tidak Ada', 'Creeper', 'Zombie', 'Hewan Pelihraanmu','Diri Sendiri'])}* dan mendapatkan total
+❤️Nyawa *${M(p1)}*, *${M(p2)}*, *${M(p3)}* dan *${M(p4)}* masing masing berkurang *-${health * 1}*, dan durability ⚔️Sword kalian masing masing berkurang *-${sword * 1}* karena kalian telah membunuh *${pickRandom(['Ender Dragon', 'Baby Dragon', 'Titan', 'Cacing dan Semut', 'PP Mikey', 'Orang', 'Kecoa', 'Semut', 'Siput', '....🗿', 'Wither', 'Sekeleton', 'Ayam Emas', 'Temenmu', 'Sapi', 'Tidak Ada', 'Creeper', 'Zombie', 'Hewan Pelihraanmu','Diri Sendiri'])}* dan mendapatkan total
 *✉️exp:* ${exp * 4}
 *💵uang:* ${money * 4}
+*🎫tiketcoin:* ${tiketcoin * 1}
 *🗑️sampah:* ${sampah  * 4}${potion == 0 ? '' : '\n*🥤Potion:* ' + potion * 4}${makananPet == 0 ? '' : '\n*🍖Makanan Pet* ' + makananPet * 4}${kayu == 0 ? '' : '\n*🪵Kayu:* ' + kayu * 4}${batu == 0 ? '' : '\n*🪨Batu:* ' + batu * 4}${string == 0 ? '' : '\n*🕸️String:* ' + string * 4}${iron == 0 ? '' : '\n*⛓️Iron:* ' + iron * 4}${diamond == 0 ? '' : '\n*💎diamond:* ' + diamond * 4}${common == 0 ? '' : '\n*📦common crate:* ' + common * 4}${uncommon == 0 ? '' : '\n*📦uncommon crate:* ' + uncommon * 4}
              `.trim()
           for (let i = 0; i < player.length; i++) {
             let p = player[i]
             setTimeout(() => {
-              users[p].healt -= healt * 1
+              users[p].health -= health * 1
               users[p].sworddurability -= sword * 1
               users[p].money += money * 1
               users[p].exp += exp * 1
+              users[p].tiketcoin += tiketcoin * 1
               users[p].sampah += sampah * 1
               users[p].potion += potion * 1
               users[p].diamond += diamond * 1
@@ -141,7 +143,7 @@ Sedang berperang di dungeon...
               users[p].makananpet += makananPet * 1
               users[p].lastdungeon = new Date * 1
 
-              if ((users[p].healt * 1) < 1) users[p].healt = 0
+              if ((users[p].health * 1) < 1) users[p].health = 0
               if ((users[p].sworddurability * 1) < 1) {
                 users[p].sword -= 1
                 users[p].sworddurability = (users[p].sword * 1) * 50
@@ -223,10 +225,10 @@ Sedang berperang di dungeon...
           let _2 = users[p2]
           let _3 = users[p3]
           let _4 = users[p4]
-          let _H1 = (_1.healt * 1)
-          let _H2 = (_2.healt * 1)
-          let _H3 = (_3.healt * 1)
-          let _H4 = (_4.healt * 1)
+          let _H1 = (_1.health * 1)
+          let _H2 = (_2.health * 1)
+          let _H3 = (_3.health * 1)
+          let _H4 = (_4.health * 1)
 
           // sd = SwordDurability :v
           let _sd1 = (_1.sworddurability * 1)
@@ -244,18 +246,18 @@ Sedang berperang di dungeon...
             let s4 = (_sd4 * 1) < 1
 
             //Buat nyimpen data sementara :v
-            let HEALT = [], SDH = [], SDM1L = []
+            let HEALTH = [], SDH = [], SDM1L = []
             for (let siapa in player) {
-              if ((users[siapa].healt * 1) < 1) HEALT.push(siapa)
+              if ((users[siapa].health * 1) < 1) HEALTH.push(siapa)
               if ((users[siapa].sworddurability * 1) < 1 && (users[siapa].sword * 1) == 1) SDH.push(siapa)
               if ((users[siapa].sworddurability * 1) < 1 && (users[siapa].sword * 1) !== 1) SDM1L.push(siapa)
             }
 
             let sI = data(SDH)
             let sH = data(SDM1L)
-            let H = data(HEALT)
+            let H = data(HEALTH)
 
-            let str3 = `${((SDH || SDH.length > 0) || (SDM1L || SDM1L.length > 0)) ? `⚔️Sword ${((SDH || SDH.length > 0 ? sI + ' Hancur, silahkan crafting ⚔️Sword kembali dengan mengetik *' + usedPrefix + 'craft sword*' : '') + (SDM1L || SDM1L.length > 0 ? (SDH || SDH.length > 0 ? ', Sedangkan ⚔️Sword ' : '') + sH + ' Hancur, dan Menurun *1* Level' : ''))}` : ''}${HEALT || HEALT.length > 0 ? `❤️Nyawa ${H} habis, silahkan isi ❤️Nyawa dengan mengetik ${usedPrefix}heal` : ''}`
+            let str3 = `${((SDH || SDH.length > 0) || (SDM1L || SDM1L.length > 0)) ? `⚔️Sword ${((SDH || SDH.length > 0 ? sI + ' Hancur, silahkan meracik ⚔️Sword kembali dengan mengetik *' + usedPrefix + 'meracik sword*' : '') + (SDM1L || SDM1L.length > 0 ? (SDH || SDH.length > 0 ? ', Sedangkan ⚔️Sword ' : '') + sH + ' Hancur, dan Menurun *1* Level' : ''))}` : ''}${HEALTH || HEALTH.length > 0 ? `❤️Nyawa ${H} habis, silahkan isi ❤️Nyawa dengan mengetik ${usedPrefix}heal` : ''}`
             await m.reply(str3, c1, {
               contextInfo: {
                 mentionedJid: conn.parseMention(str3)
@@ -299,13 +301,13 @@ Sedang berperang di dungeon...
                 player4: '',
             },
             price: {
-                money: (Math.floor(Math.random() * 501)) * 1,
-                exp: (Math.floor(Math.random() * 701)) * 1,
+                money: (Math.floor(Math.random() * 500001)) * 1,
+                exp: (Math.floor(Math.random() * 100001)) * 1,
                 sampah: (Math.floor(Math.random() * 201)) * 1,
                 potion: (Math.floor(Math.random() * 2)) * 1,
                 diamond: (pickRandom([0, 0, 0, 0, 1, 0, 0])) * 1,
                 iron: (Math.floor(Math.random() * 2)) * 1,
-                kayu: (Math.floor(Math.random() * 3)) * 1,
+                kayu: (Math.floor(Math.random() * 100)) * 1,
                 batu: (Math.floor(Math.random() * 2)) * 1,
                 string: (Math.floor(Math.random() * 2)) * 1,
                 common: (pickRandom([0, 0, 0, 1, 0, 0])) * 1,
@@ -313,10 +315,11 @@ Sedang berperang di dungeon...
                 mythic: (pickRandom([0, 0, 0, 1, 0, 0, 0, 0, 0])) * 1,
                 legendary: (pickRandom([0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0])) * 1,
                 pet: (pickRandom([0, 0, 0, 1, 0, 0, 0, 0, 0, 0])) * 1,
+                tiketcoin: (pickRandom([0, 0, 2, 0, 0, 1, 0, 0, 0, 0])) * 1,
                 makananPet: (pickRandom([0, 0, 0, 1, 0, 0, 0, 0])) * 1,
             },
             less: {
-                healt: (Math.floor(Math.random() * 101)) * 1,
+                health: (Math.floor(Math.random() * 101)) * 1,
                 sword: (Math.floor(Math.random() * 50)) * 1,
             }
         }
@@ -387,18 +390,20 @@ Sedang berperang di dungeon...
 
       setTimeout(async () => {
         let users = global.db.data.users[p1]
-        let { healt, sword } = room.less
-        let { exp, money, sampah, potion, diamond, iron, kayu, batu, string, common, uncommon, mythic, legendary, pet, makananPet } = room.price  
+        let { health, sword } = room.less
+        let { exp, money, tiketcoin, sampah, potion, diamond, iron, kayu, batu, string, common, uncommon, mythic, legendary, pet, makananPet } = room.price  
         let str2 = `
-❤️Nyawa Kamu berkurang -${healt * 1}, dan durability ⚔️Sword Kamu -${sword * 1} karena kamu telah Membunuh ${pickRandom(['Ender Dragon', 'Baby Dragon', 'Titan', 'Cacing dan Semut', 'PP Mikey', 'Orang', 'Kecoa', 'Semut', 'Siput', '....🗿', 'Wither', 'Sekeleton', 'Ayam Emas', 'Temenmu', 'Sapi', 'Tidak Ada', 'Creeper', 'Zombie', 'Hewan Pelihraanmu','Diri Sendiri'])} dan mendapatkan
+❤️Nyawa Kamu berkurang -${health * 1}, dan durability ⚔️Sword Kamu -${sword * 1} karena kamu telah Membunuh ${pickRandom(['Ender Dragon', 'Baby Dragon', 'Titan', 'Cacing dan Semut', 'PP Mikey', 'Orang', 'Kecoa', 'Semut', 'Siput', '....🗿', 'Wither', 'Sekeleton', 'Ayam Emas', 'Temenmu', 'Sapi', 'Tidak Ada', 'Creeper', 'Zombie', 'Hewan Pelihraanmu','Diri Sendiri'])} dan mendapatkan
 *✉️exp:* ${exp}
 *💵uang:* ${money}
+*🎫tiketcoin:* ${tiketcoin * 1}
 *🗑️sampah:* ${sampah}${potion == 0 ? '' : '\n*🥤Potion:* ' + potion}${makananPet == 0 ? '' : '\n*🍖Makanan Pet* ' + makananPet * 1}${kayu == 0 ? '' : '\n*🪵Kayu:* ' + kayu}${batu == 0 ? '' : '\n*🪨Batu:* ' + batu}${string == 0 ? '' : '\n*🕸️String:* ' + string}${iron == 0 ? '' : '\n*⛓️Iron:* ' + iron}${diamond == 0 ? '' : '\n*💎diamond:* ' + diamond}${common == 0 ? '' : '\n*📦common crate:* ' + common}${uncommon == 0 ? '' : '\n*📦uncommon crate:* ' + uncommon}
 `.trim()
-        users.healt -= healt * 1
+        users.health -= health * 1
         users.sworddurability -= sword * 1
         users.money += money * 1
         users.exp += exp * 1
+        users.tiketcoin += tiketcoin * 1
         users.sampah += sampah * 1
         users.potion += potion * 1
         users.diamond += diamond * 1
@@ -422,16 +427,16 @@ Sedang berperang di dungeon...
           let str3 = (mythic > 0 ? 'Dan juga' : 'Selamat Kamu') + ' mendapatkan item Epic yaitu ' + (pet > 0 && legendary > 0 ? `*${legendary}* 🎁Legendary Crate dan *${pet}* 📦Pet Crate` : pet > 0 && legendary < 1 ? `*${pet}* 📦Pet Crate` : legendary > 0 && pet < 1 ? `*${legendary}* 🎁Legendary Crate` : '')
           m.reply(str3, room.player1)
         }
-        if ((users.healt * 1) < 1 || (users.sworddurability * 1) < 1) {
+        if ((users.health * 1) < 1 || (users.sworddurability * 1) < 1) {
           let sword1 = (users.sworddurability * 1) < 1 && (users.sword * 1) == 1
           let _sword1 = (users.sworddurability * 1) < 1 && (users.sword * 1) > 1
           let __sword1 = (users.sworddurability * 1) < 1 && (users.sword * 1) > 0
-          let health1 = (users.healt * 1) < 1
+          let health1 = (users.health * 1) < 1
           if (__sword1) {
             users[p1].sword -= 1
             users[p1].sworddurability = 0
           }
-          let str3 = `${__sword1 ? `⚔️Sword Kamu ${_sword1 ? ` Level nya berkurang 1 karena hancur` : ` Hancur, dan silahkan crafting ⚔️Sword kembali dengan mengetik ${usedPrefix}`}craft sword` : ''} ${health1 ? `${__sword1 ? 'Dan ' : ''}❤️Nyawa Kamu habis, silahkan isi kembali dengan ketik ${usedPrefix}heal` : ''}`
+          let str3 = `${__sword1 ? `⚔️Sword Kamu ${_sword1 ? ` Level nya berkurang 1 karena hancur` : ` Hancur, dan silahkan meracik ⚔️Sword kembali dengan mengetik ${usedPrefix}`}meracik sword` : ''} ${health1 ? `${__sword1 ? 'Dan ' : ''}❤️Nyawa Kamu habis, silahkan isi kembali dengan ketik ${usedPrefix}heal` : ''}`
           m.reply(str3, room.player1, {
             contextInfo: {
               mentionedJid: this.parseMention(str3)
@@ -472,8 +477,8 @@ Sedang berperang di dungeon...
       })
         
       for (let _p of PLAYER) {
-        room.price.money += (Math.floor(Math.random() * 41)) * 1
-        room.price.exp += (Math.floor(Math.random() * 76)) * 1
+        room.price.money += (Math.floor(Math.random() * 500001)) * 1
+        room.price.exp += (Math.floor(Math.random() * 100001)) * 1
         room.game.sampah += (Math.floor(Math.random() * 16)) * 1
         room.price.string += (pickRandom([0, 0, 0, 1, 0, 0, 0, 0, 0, 0])) * 1
         room.price.kayu += (pickRandom([0, 0, 0, 1, 0, 0, 0, 0, 0, 0])) * 1
@@ -483,14 +488,15 @@ Sedang berperang di dungeon...
 
       let users = global.db.data.users[m.sender]
       let orang = PLAYER.length
-      let { healt, sword } = room.less
-      let { exp, money, sampah, potion, diamond, iron, kayu, batu, string, common, uncommon, mythic, legendary, pet, makananPet } = room.price
+      let { health, sword } = room.less
+      let { exp, money, tiketcoin, sampah, potion, diamond, iron, kayu, batu, string, common, uncommon, mythic, legendary, pet, makananPet } = room.price
 
       setTimeout(async () => {
         let str2 =`
-❤️Nyawa ${P} masing masing berkurang *-${healt * 1}*, dan durability ⚔️Sword kalian masing masing berkurang *-${sword * 1}* karena kalian telah membunuh *${pickRandom(['Ender Dragon', 'Baby Dragon', 'Titan', 'Cacing dan Semut', 'PP Mikey', 'Orang', 'Kecoa', 'Semut', 'Siput', '....🗿', 'Wither', 'Sekeleton', 'Ayam Emas', 'Temenmu', 'Sapi', 'Tidak Ada', 'Creeper', 'Zombie', 'Hewan Pelihraanmu','Diri Sendiri'])}* dan mendapatkan total
+❤️Nyawa ${P} masing masing berkurang *-${health * 1}*, dan durability ⚔️Sword kalian masing masing berkurang *-${sword * 1}* karena kalian telah membunuh *${pickRandom(['Ender Dragon', 'Baby Dragon', 'Titan', 'Cacing dan Semut', 'PP Mikey', 'Orang', 'Kecoa', 'Semut', 'Siput', '....🗿', 'Wither', 'Sekeleton', 'Ayam Emas', 'Temenmu', 'Sapi', 'Tidak Ada', 'Creeper', 'Zombie', 'Hewan Pelihraanmu','Diri Sendiri'])}* dan mendapatkan total
 *✉️exp:* ${exp * orang}
 *💵uang:* ${money * orang}
+*🎫tiketcoin:* ${tiketcoin * 1}
 *🗑️sampah:* ${sampah  * orang}${potion == 0 ? '' : '\n*🥤Potion:* ' + potion * orang}${makananPet == 0 ? '' : '\n*🍖Makanan Pet* ' + makananPet * orang}${kayu == 0 ? '' : '\n*🪵Kayu:* ' + kayu * orang}${batu == 0 ? '' : '\n*🪨Batu:* ' + batu * orang}${string == 0 ? '' : '\n*🕸️String:* ' + string * orang}${iron == 0 ? '' : '\n*⛓️Iron:* ' + iron * orang}${diamond == 0 ? '' : '\n*💎diamond:* ' + diamond * orang}${common == 0 ? '' : '\n*📦common crate:* ' + common * orang}${uncommon == 0 ? '' : '\n*📦uncommon crate:* ' + uncommon * orang}
 `.trim()
         await m.reply(str2, c1, {
@@ -517,10 +523,11 @@ Sedang berperang di dungeon...
       for (let i = 0; i < PLAYER.length; i++) {
         let p = PLAYER[i]
         setTimeout(() => {
-          users[p].healt -= healt * 1
+          users[p].health -= health * 1
           users[p].sworddurability -= sword * 1
           users[p].money += money * 1
           users[p].exp += exp * 1
+          users[p].tiketcoin += tiketcoin * 1
           users[p].sampah += sampah * 1
           users[p].potion += potion * 1
           users[p].diamond += diamond * 1
@@ -536,7 +543,7 @@ Sedang berperang di dungeon...
           users[p].makananpet += makananPet * 1
           users[p].lastdungeon = new Date * 1
 
-          if ((users[p].healt * 1) < 1) users[p].healt = 0
+          if ((users[p].health * 1) < 1) users[p].health = 0
           if ((users[p].sworddurability * 1) < 1) {
             users[p].sword -= 1
             users[p].sworddurability = (users[p].sword * 1) * 50
@@ -599,10 +606,10 @@ Sedang berperang di dungeon...
       let _2 = users && p2 && users[p2] ? users[p2] : {}
       let _3 = users && p3 && users[p3] ? users[p3] : {}
       let _4 = users && p4 && users[p4] ? users[p4] : {}
-      let _H1 = _1 && _1.healt ? (_1.healt * 1) : 100
-      let _H2 = _2 && _2.healt ? (_2.healt * 1) : 100
-      let _H3 = _3 && _3.healt ? (_3.healt * 1) : 100
-      let _H4 = _4 && _4.healt ? (_4.healt * 1) : 100
+      let _H1 = _1 && _1.health ? (_1.health * 1) : 100
+      let _H2 = _2 && _2.health ? (_2.health * 1) : 100
+      let _H3 = _3 && _3.health ? (_3.health * 1) : 100
+      let _H4 = _4 && _4.health ? (_4.health * 1) : 100
 
       // sd = SwordDurability :v
       let _sd1 = _1 && _1.sworddurability ? (_1.sworddurability * 1) : 100
@@ -620,9 +627,9 @@ Sedang berperang di dungeon...
         let s4 = _sd4 ? (_sd4 * 1) < 1 : false
 
         //Buat nyimpen data sementara :v
-        let HEALT = [], SDH = [], SDM1L = []
+        let HEALTH = [], SDH = [], SDM1L = []
         for (let siapa in PLAYER) {
-          if ((users[siapa].healt * 1) < 1) HEALT.push(siapa)
+          if ((users[siapa].health * 1) < 1) HEALTH.push(siapa)
           if ((users[siapa].sworddurability * 1) < 1 && (users[siapa].sword * 1) == 1) SDH.push(siapa)
           if ((users[siapa].sworddurability * 1) < 1 && (users[siapa].sword * 1) !== 1) SDM1L.push(siapa)
         }
@@ -630,9 +637,9 @@ Sedang berperang di dungeon...
         // Convert Array to String
         let sI = data(SDH)
         let sH = data(SDM1L)
-        let H = data(HEALT)
+        let H = data(HEALTH)
 
-        let str3 = `${((SDH || SDH.length > 0) || (SDM1L || SDM1L.length > 0)) ? `⚔️Sword ${((SDH || SDH.length > 0 ? sI + ' Hancur, silahkan crafting ⚔️Sword kembali dengan mengetik *' + usedPrefix + 'craft sword*' : '') + (SDM1L || SDM1L.length > 0 ? (SDH || SDH.length > 0 ? ', Sedangkan ⚔️Sword ' : '') + sH + ' Hancur, dan Menurun *1* Level' : ''))}` : ''}${HEALT || HEALT.length > 0 ? `❤️Nyawa ${H} habis, silahkan isi ❤️Nyawa dengan mengetik ${usedPrefix}heal` : ''}`
+        let str3 = `${((SDH || SDH.length > 0) || (SDM1L || SDM1L.length > 0)) ? `⚔️Sword ${((SDH || SDH.length > 0 ? sI + ' Hancur, silahkan meracik ⚔️Sword kembali dengan mengetik *' + usedPrefix + 'meracik sword*' : '') + (SDM1L || SDM1L.length > 0 ? (SDH || SDH.length > 0 ? ', Sedangkan ⚔️Sword ' : '') + sH + ' Hancur, dan Menurun *1* Level' : ''))}` : ''}${HEALTH || HEALTH.length > 0 ? `❤️Nyawa ${H} habis, silahkan isi ❤️Nyawa dengan mengetik ${usedPrefix}heal` : ''}`
         m.reply(str3, c1, {
           contextInfo: {
             mentionedJid: this.parseMention(str3)
@@ -663,7 +670,7 @@ Sedang berperang di dungeon...
 }
 
 handler.help = ['dungeon'].map(v => v + ' [nama room]')
-handler.tags = ['rpg']
+handler.tags = ['game']
 handler.command = /^(du?n?g?e?o?n?)$/i
 
 handler.mods = false
@@ -683,16 +690,16 @@ function pickRandom(list) {
  * Message if the conditions are not met
  * @param {Number} sword 
  * @param {Number} armor 
- * @param {Number} healt 
+ * @param {Number} health 
  * @param {String} usedPrefix 
  * @returns String
  */
-function item(sword, armor, healt, usedPrefix) {
+function item(sword, armor, health, usedPrefix) {
   let sw = (sword * 1) < 1
   let a = (armor * 1) < 1
-  let h = (healt * 1) < 90
+  let h = (health * 1) < 90
   let str = `
-${sw ? 'Kamu belum memiliki ⚔️Sword' : ''}${sw && a && h ? ',' : sw && a ? ' dan ' : ''} ${a ? '🥼Armor' : ''}${sw && a && h ? ' dan Minimal 90 ❤Health' : h ? 'Minimal 90 ❤Health' : ''}${sw ? `\nuntuk mendapatkan ⚔Sword ketik *${usedPrefix}craft sword*` : ''}${a ? `\nuntuk mendapatkan 🥼Armor ketik *${usedPrefix}buy armor*` : ''}${h ? `\nuntuk menambah ❤Health ketik *${usedPrefix}heal*` : ''}
+${sw ? 'Kamu belum memiliki ⚔️Sword' : ''}${sw && a && h ? ',' : sw && a ? ' dan ' : ''} ${a ? '🥼Armor' : ''}${sw && a && h ? ' dan Minimal 90 ❤Health' : h ? 'Minimal 90 ❤Health' : ''}${sw ? `\nuntuk mendapatkan ⚔Sword ketik *${usedPrefix}meracik sword*` : ''}${a ? `\nuntuk mendapatkan 🥼Armor ketik *${usedPrefix}shop buy armor*` : ''}${h ? `\nuntuk menambah ❤Health ketik *${usedPrefix}heal*` : ''}
   `.trim()
   return str
 }
